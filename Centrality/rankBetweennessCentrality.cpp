@@ -31,15 +31,15 @@ pair<int, int> countBet[V];
 
 // Function to print shortest path from source to j
 // using parent array
-void printPath(int parent[], int j)
+void addPath(int parent[], int j)
 {
     // Base Case : If j is source
     if (parent[j]==-1){
-        countBet[j].first++;
+        //countBet[j].first++;
         return;
     }
     
-    printPath(parent, parent[j]);
+    addPath(parent, parent[j]);
     
     countBet[j].first++;
 
@@ -48,13 +48,13 @@ void printPath(int parent[], int j)
  
 // A utility function to print the constructed distance
 // array
-int printSolution(double dist[], int n, int parent[], int src)
+int addSolution(double dist[], int n, int parent[], int src)
 {
     //printf("Vertex\t  Distance\tPath");
     for (int i = 1; i < V; i++)
     {
         //printf("\n%d -> %d \t\t %d\t\t%d", src, i, dist[i], src);
-        printPath(parent, i);
+        addPath(parent, i);
     }
     //printf("\n");
 }
@@ -113,7 +113,7 @@ void dijkstra(double graph[V][V], int src)
     }
     parent[src] = -1;
     // print the constructed distance array
-    printSolution(dist, V, parent, src);
+    addSolution(dist, V, parent, src);
 }
  
 // driver program to test above function
@@ -142,9 +142,15 @@ int main()
         dijkstra(graph, i);   
     }
     sort(countBet, countBet+V, std::greater< pair<int, int> >());
-
+    ofstream obj("betweennessRank.txt");
+    obj<<V-3<<endl;
     for(int i = 0; i < V; i++)
-        printf("%d --> %d \n", countBet[i].second, countBet[i].first);
+    {
+        if(countBet[i].second!=134 && countBet[i].second!=135 && countBet[i].second!=0)
+            obj<<countBet[i].second<<endl;
+    }
+        
+        //printf("%d --> %d \n", countBet[i].second, countBet[i].first);
 
  
     return 0;

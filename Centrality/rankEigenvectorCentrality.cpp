@@ -59,9 +59,13 @@ int main()
 		v.push_back(make_pair(b[i],i+1));
 	}
 	sort(v.begin(), v.end(), greater<pair<double, int> >());
+	ofstream obj("eigenvector.txt");
+	obj<<N<<endl;
 	for(int i=0;i<N+2;i++)
 	{
-		cout<<v[i].second<<"-->"<<v[i].first<<endl;
+		if(v[i].second!=134 && v[i].second!=135)
+			obj<<v[i].second<<endl;
+		//cout<<v[i].second<<"-->"<<v[i].first<<endl;
 	}
 	return 0;
 } 

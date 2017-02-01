@@ -1,6 +1,7 @@
 //This file calculates the closeness centrality of each station by finding the inverse of 
 //average shortest distance of each node from every other node.
 
+//NOTE : Remove stations 134 and 135 from the output of this file as these stations are non exiting.
 #include <bits/stdc++.h>
 using namespace std;
 #define N 151 //no.of nodes in the network
@@ -8,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	ifstream obj1("../Efficiency-calc/AllPairShortestPathMatrix(dij).txt");
+	ifstream obj1("../Efficiency-Calc/allPairShortestPathMatrix(dij).txt");
 	vector<pair<double, int> > close;
 	for(int i=1;i<=N+2;i++)
 	{
@@ -24,9 +25,12 @@ int main()
 		close.push_back(make_pair(1/sum, i));
 	}
 	sort(close.begin(), close.end(), greater<pair<double, int> >() );
-	for(int i=0;i<close.size();i++)
+	ofstream obj("closenessRank.txt");
+	obj<<N<<endl;
+	for(int i=2;i<close.size();i++)
 	{
-		cout<<close[i].second<<"-->"<<close[i].first<<endl;
+		obj<<close[i].second<<endl;
+		//cout<<close[i].second<<"-->"<<close[i].first<<endl;
 	}
 	return 0;
 } 
