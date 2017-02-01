@@ -33,12 +33,12 @@ pair<int, int> query(int v, bool type)
 		if(active[i] && !vis[i])
 			dfs(i, c++);
 	
-	cout<<c-1<<endl;
+	//cout<<c-1<<endl;
 	for(int i = 1; i <= N; ++i)
 		if(active[i])
 			compSZ[comp[i]]++;
 
-	int ans = -1;
+	int ans = compSZ[1];
 	for(int i = 1; i < c; ++i)
 		ans = max(ans, compSZ[i]);
 
@@ -73,17 +73,19 @@ int main()
 	cin>>f;
 
 	ifstream file2("../Centrality/" + f);
-
+	cout<<"Type of query:"<<endl;
+	int type;
+	cin>>type;
 	int q;
 	file2>>q;
 
 	while(q--)
 	{
-		int id, type;
-		file2>>id>>type;
+		int id;//, type;
+		file2>>id;//>>type;
 
 		pair<int, int> output = query(id, type);
-		cout<<output.first<<" "<<output.second<<endl;
+		//cout<<output.first<<" "<<output.second<<endl;
 		double scf = 1.0 * output.first / (N - 2);
 		double fsa = 1.0 * output.second / (N - 2);
 
