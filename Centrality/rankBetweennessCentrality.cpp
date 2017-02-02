@@ -35,28 +35,22 @@ void addPath(int parent[], int j)
 {
     // Base Case : If j is source
     if (parent[j]==-1){
-        //countBet[j].first++;
         return;
     }
     
     addPath(parent, parent[j]);
     
     countBet[j].first++;
-
-    //printf("%d ", j);
 }
  
 // A utility function to print the constructed distance
 // array
 int addSolution(double dist[], int n, int parent[], int src)
 {
-    //printf("Vertex\t  Distance\tPath");
-    for (int i = 1; i < V; i++)
+     for (int i = 1; i < V; i++)
     {
-        //printf("\n%d -> %d \t\t %d\t\t%d", src, i, dist[i], src);
         addPath(parent, i);
     }
-    //printf("\n");
 }
  
 // Funtion that implements Dijkstra's single source shortest path
@@ -124,19 +118,26 @@ int main()
         countBet[i]=make_pair(0, i);
     }
     /* Let us create the example graph discussed above */
-    ifstream file("StationData/final_output.txt");
+    ifstream file("../StationData/final_output.txt");
     string line;
     getline(file, line);
     int src,dest;
     double fare, time1, dist;
     double graph[V][V];
+    for (int i = 0; i < V; ++i)
+    {
+        for (int j = 0; j < V; ++j)
+        {
+            graph[i][j]=0;
+        }
+    }
     for (int i = 0; i < 153; ++i)
     {
         file>>src>>dest>>fare>>time1>>dist;
 
         graph[src][dest] = dist;
+        graph[dest][src] = dist;
     }
- 
     for (int i = 1; i < V; ++i)
     {
         dijkstra(graph, i);   
@@ -148,9 +149,9 @@ int main()
     {
         if(countBet[i].second!=134 && countBet[i].second!=135 && countBet[i].second!=0)
             obj<<countBet[i].second<<endl;
-    }
         
-        //printf("%d --> %d \n", countBet[i].second, countBet[i].first);
+        printf("%d --> %d \n", countBet[i].second, countBet[i].first);
+    }
 
  
     return 0;
