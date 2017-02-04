@@ -62,8 +62,8 @@ int main()
 		file>>u>>v>>a>>b>>c;
 		graph[u].push_back(v);
 		graph[v].push_back(u);
-		active[u] = 1;
-		active[v] = 1;
+		//active[u] = 1;
+		//active[v] = 1;
 	}
 	file.close();
 
@@ -74,11 +74,20 @@ int main()
 
 	ifstream file2("../Centrality/" + f);
 	cout<<"Type of query:"<<endl;
-	int type;
+	bool type;
 	cin>>type;
+	for (int i = 1; i <= 153; ++i)
+	{
+		active[i]=!type;
+	}
+	active[134]=0;
+	active[135]=0;
 	int q;
 	file2>>q;
-
+	//cout<<"SCF\tFraction of stations active\n";
+	ofstream obj("graphdata"+f);
+	obj<<q+1<<endl;
+	obj<<!type<<" "<<!type<<endl;
 	while(q--)
 	{
 		int id;//, type;
@@ -88,8 +97,8 @@ int main()
 		//cout<<output.first<<" "<<output.second<<endl;
 		double scf = 1.0 * output.first / (N - 2);
 		double fsa = 1.0 * output.second / (N - 2);
-
-		cout<<scf<<" "<<fsa<<endl;
+		obj<<scf<<" "<<fsa<<endl;
+		//cout<<scf<<" "<<fsa<<endl;
 	}
 
 	file2.close();
