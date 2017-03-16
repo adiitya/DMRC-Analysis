@@ -1,6 +1,6 @@
 /*This file calculates the global and local effieciency
   */
-
+#include <bits/stdc++.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -119,9 +119,10 @@ void eloc()
 
 int main()
 {
-	ifstream obj1("dij.txt");
-	ifstream obj2("lij.txt");
-	ifstream obj3("aij.txt");
+	clock_t st=clock();
+	ifstream obj1("allPairShortestPathMatrix(dij).txt");
+	ifstream obj2("sphericalShortestPathMatrix(lij).txt");
+	ifstream obj3("AdjacencyMatrix(aij).txt");
 	for(int i=0;i<N+2;i++)
 	{
 		for(int j=0;j<N+2;j++)
@@ -157,6 +158,8 @@ int main()
 	cout<<"E(idle) = "<<sum2<<endl;
 	cout<<"E(norm_global) = "<<sum1/sum2<<endl;
 	eloc();
+	clock_t difftime=(double)(clock()-st)/CLOCKS_PER_SEC*1000;
+	cout<<"time taken:- "<<difftime<<endl;
 	return 0;
 }
 /*
