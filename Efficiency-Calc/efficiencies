@@ -1,0 +1,47 @@
+original network efficiency:
+
+E(global) = 0.0771584
+E(idle) = 0.106273
+E(norm_global) = 0.726038
+E(norm_local) = 0.0596026
+time taken:- 41
+
+after adding new edges:
+
+E(global) = 0.0852041
+E(idle) = 0.106273
+E(norm_global) = 0.801745
+E(norm_local) = 0.0198675
+time taken:- 43
+
+orginal network efficiency (keeping end nodes value=0):
+
+E(global) = 0.0771584
+E(idle) = 0.106273
+E(norm_global) = 0.726038
+E(norm_local) = 0
+time taken:- 44
+
+after adding new edges(keeping end nodes value=0):
+edges=150
+E(global) = 0.0938368
+E(idle) = 0.106273
+E(norm_global) = 0.882976
+E(norm_local) = 0.00775340131575541
+time taken:- 50
+
+after adding new edges(keeping end nodes value=0):
+edges=200
+E(global) = 0.0951865
+E(idle) = 0.106273
+E(norm_global) = 0.895676
+E(norm_local) = 0.0305117494161209
+time taken:- 44
+
+after adding new edges(keeping end nodes value=0):
+edges=250
+E(global) = 0.0963383
+E(idle) = 0.106273
+E(norm_global) = 0.906514
+E(norm_local) = 0.0695362298252355
+time taken:- 51
