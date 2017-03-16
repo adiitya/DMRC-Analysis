@@ -44,7 +44,7 @@ void eloc()
 			}
 		}
 		int n=nodes.size();
-		if(n==0)continue;
+		if(n==0 || n==1)continue;
 		//create adjacency matrices
 		double sa[n][n];
 		double **sd=new double*[n];
@@ -101,28 +101,33 @@ void eloc()
 				}
 			}
 		}
-		if(n==1)
+		/*if(n==1)
 		{
-			sum1=1;
-			sum2=1;
+			sum1+=0;
+			sum2+=0;
 		}
 		else
 		{
 			sum1=sum1/(n*(n-1));
 			sum2=sum2/(n*(n-1));
-		}
+		}*/
+		//if(sum1/sum2 !=0)cout<<"see"<<(sum1/sum2)<<endl;
 		sum+=(sum1/sum2);
 	}
 	sum=sum/N;
-	cout<<"E(norm_local) = "<<sum<<endl;
+	cout<<"E(norm_local) = "<<setprecision(15)<<sum<<endl;
 }
 
 int main()
 {
 	clock_t st=clock();
-	ifstream obj1("allPairShortestPathMatrix(dij).txt");
+	ifstream obj1("../Novelty/allPairShortestPathMatrix(dij).txt");
 	ifstream obj2("sphericalShortestPathMatrix(lij).txt");
-	ifstream obj3("AdjacencyMatrix(aij).txt");
+	ifstream obj3("../Novelty/AdjacencyMatrix(aij).txt");
+
+	/*ifstream obj1("allPairShortestPathMatrix(dij).txt");
+	ifstream obj2("sphericalShortestPathMatrix(lij).txt");
+	ifstream obj3("AdjacencyMatrix(aij).txt");*/
 	for(int i=0;i<N+2;i++)
 	{
 		for(int j=0;j<N+2;j++)
