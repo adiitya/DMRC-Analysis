@@ -1,65 +1,84 @@
-/*This file calculates the global and local effieciency
-  */
+/*
+ * This file calculates the global and local efficiency
+ */
+
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <set>
-using namespace std;
-#define INF 50000
-const int N=151;
-double d[N+2][N+2];
-double l[N+2][N+2];
-double a[N+2][N+2];
 
-void floyd(double **sd, int n)
+
+using namespace std;
+
+
+const int INF 	= 50000;
+const int N 	= 151;
+
+const string NEW_EFFICIENCY 	= "../Novelty/";
+const string OLD_EFFICIENCY 	= "./";
+
+const string D_IJ = "allPairShortestPathMatrix(dij).txt";
+const string A_IJ = "adjacencyMatrix(aij).txt";
+const string L_IJ = "sphericalShortestPathMatrix(lij).txt";
+
+
+double d[N + 2][N + 2];
+double l[N + 2][N + 2];
+double a[N + 2][N + 2];
+
+
+// Flyod Warshall - All pair shortest path
+// Used for calculating d_ij
+void floyd(double** sd, int n)
 {
-	for(int k=0;k<n;k++)
+	for(int k = 0; k < n; k++)
 	{
-		for(int i=0;i<n;i++)
+		for(int i = 0; i < n; i++)
 		{
-			for(int j=0;j<n;j++)
+			for(int j = 0; j < n; j++)
 			{
-				if(sd[i][k]+sd[k][j]<sd[i][j])
+				if(sd[i][k] + sd[k][j] < sd[i][j])
 				{
-					sd[i][j]=sd[i][k]+sd[k][j];
+					sd[i][j] = sd[i][k] + sd[k][j];
 				}
 			}
 		}
 	}
 }
 
-void eloc()
+double calculateNormalizedLocalEfficiency()
 {
-	double sum=0;
-	for(int c=0;c<N+2;c++)
+	double sum = 0;
+	for(int c = 0; c < N + 2; c++)
 	{
 		//find neighbours
 		set<int> nodes;
-		for(int j=0;j<N+2;j++)
+		for(int j = 0; j < N + 2; j++)
 		{
-			if(a[c][j]!=0)
+			if(a[c][j] != 0)
 			{
 				nodes.insert(j);
 			}
 		}
-		int n=nodes.size();
-		if(n==0 || n==1)continue;
+		int n = nodes.size();
+		if(n == 0 || n == 1) continue;
 		//create adjacency matrices
 		double sa[n][n];
-		double **sd=new double*[n];
+		double **sd = new double*[n];
 		double sl[n][n];
-		for(int p=0;p<n;p++)
+		for(int p = 0; p < n; p++)
 		{
-			sd[p]=new double[n];
-			for(int q=0;q<n;q++)
+			sd[p] = new double[n];
+			for(int q = 0; q < n; q++)
 			{
-				sa[p][q]=0;
-				sd[p][q]=INF;
-				sl[p][q]=0;
+				sa[p][q] = 0;
+				sd[p][q] = INF;
+				sl[p][q] = 0;
 			}
 		}
-		int p=0,q=0;
+		int p = 0, q = 0;
 		for(set<int>::iterator it1=nodes.begin();it1!=nodes.end();it1++)
 		{
 			q=0;
@@ -89,13 +108,13 @@ void eloc()
 			{
 				if(i!=j && sd[i][j]!=INF)
 				{
-					if(sd[i][j]==0){cout<<"c="<<c<<" sd "<<i<<" "<<j<<" = 0"<<endl;return;}
+					if(sd[i][j]==0){cout<<"c="<<c<<" sd "<<i<<" "<<j<<" = 0"<<endl;exit(0);}
 					double temp=1/sd[i][j];
 					sum1+=temp;
 				}
 				if(i!=j && sl[i][j]!=INF)
 				{
-					if(sl[i][j]==0){cout<<"c="<<c<<" sl "<<i<<" "<<j<<" = 0"<<endl;return;}
+					if(sl[i][j]==0){cout<<"c="<<c<<" sl "<<i<<" "<<j<<" = 0"<<endl;exit(0);}
 					double t=1/sl[i][j];
 					sum2+=t;			
 				}
@@ -115,60 +134,143 @@ void eloc()
 		sum+=(sum1/sum2);
 	}
 	sum=sum/N;
-	cout<<"E(norm_local) = "<<setprecision(15)<<sum<<endl;
+
+	return sum;
+	//cout<<"E(norm_local) = "<<setprecision(15)<<sum<<endl;
+}
+
+struct Efficiency
+{
+	double global;
+	double idle;
+	double normalizedGlobal;
+	double normalizedLocal;
+};
+
+/*
+ * 1. a_ij -> Adjacency matrix with weigted edges
+ * 2. l_ij -> Geo-distance matrix i.e. calculated using latitutes and longitudes
+ * 3. d_ij -> Distance matrix calculated using path length
+ */
+Efficiency calculateEfficiency(string a_ij, string l_ij, string d_ij)
+{
+	ifstream obj1(a_ij);
+	ifstream obj2(l_ij);
+	ifstream obj3(d_ij);
+
+	for(int i = 0; i < N + 2; i++)
+	{
+		for(int j = 0; j < N + 2; j++)
+		{
+			obj1 >> a[i][j];
+			obj2 >> l[i][j];
+			obj3 >> d[i][j];
+		}
+	}
+
+	obj1.close();
+	obj2.close();
+	obj3.close();
+
+	double sum1 = 0;
+	double sum2 = 0;
+	for(int i = 0; i < N + 2; i++)
+	{
+		for(int j = 0; j < N + 2; j++)
+		{
+			if(i != j && d[i][j] != -1)
+			{
+				if(d[i][j] == 0)
+				{
+					cout<<"d "<<i<<" "<<j<<" = 0"<<endl;
+					exit(0);
+				}
+
+				double temp = 1 / d[i][j];
+				sum1 += temp;
+			}
+
+			if(i != j && l[i][j] != -1)
+			{
+				if(l[i][j] == 0)
+				{
+					cout<<"l "<<i<<" "<<j<<" = 0"<<endl;
+					exit(0);
+				}
+
+				double t = 1 / l[i][j];
+				sum2 += t;			
+			}
+		}
+	}
+
+	sum1 = sum1 / (N * (N - 1));
+	sum2 = sum2 / (N * (N - 1));
+
+	Efficiency efficiency;
+	efficiency.global 	= sum1;
+	efficiency.idle 	= sum2;
+	efficiency.normalizedGlobal 	= sum1 / sum2;
+	efficiency.normalizedLocal 		= calculateNormalizedLocalEfficiency();
+
+	return efficiency;
+}
+
+inline double percentageImprovement(double original, double improved)
+{
+	return 100.0 * (improved - original) / original;
+}
+
+void printCompareEfficiency(Efficiency original, Efficiency improved)
+{
+	cout << "\n***** Efficiency Calculations *****\n" << endl;
+
+	cout << left;
+
+	cout << setw(20) << "Efficiency";
+	cout << setw(15) << "Original";
+	cout << setw(15) << "Improved";
+	cout << setw(15) << "% Increased" << endl;
+	cout << endl;
+
+	cout << setw(20) << "Global";
+	cout << setw(15) << original.global;
+	cout << setw(15) << improved.global;
+	cout << setw(15) << percentageImprovement(original.global, improved.global) << endl;
+
+	cout << setw(20) << "Normalized Global";
+	cout << setw(15) << original.normalizedGlobal;
+	cout << setw(15) << improved.normalizedGlobal;
+	cout << setw(15) << percentageImprovement(original.normalizedGlobal, improved.normalizedGlobal) << endl;
+
+	cout << setw(20) << "Normalized Local";
+	cout << setw(15) << original.normalizedLocal;
+	cout << setw(15) << improved.normalizedLocal;
+	cout << setw(15) << percentageImprovement(original.normalizedLocal, improved.normalizedLocal) << endl;
+
+	cout << right;
 }
 
 int main()
 {
-	clock_t st=clock();
-	ifstream obj1("../Novelty/allPairShortestPathMatrix(dij).txt");
-	ifstream obj2("sphericalShortestPathMatrix(lij).txt");
-	ifstream obj3("../Novelty/AdjacencyMatrix(aij).txt");
+	clock_t start = clock();
 
-	/*ifstream obj1("allPairShortestPathMatrix(dij).txt");
-	ifstream obj2("sphericalShortestPathMatrix(lij).txt");
-	ifstream obj3("AdjacencyMatrix(aij).txt");*/
-	for(int i=0;i<N+2;i++)
-	{
-		for(int j=0;j<N+2;j++)
-		{
-			obj1>>d[i][j];
-			obj2>>l[i][j];
-			obj3>>a[i][j];
-		}
-	}
-	double sum1=0;
-	double sum2=0;
-	for(int i=0;i<N+2;i++)
-	{
-		for(int j=0;j<N+2;j++)
-		{
-			if(i!=j && d[i][j]!=-1)
-			{
-				if(d[i][j]==0){cout<<"d "<<i<<" "<<j<<" = 0"<<endl;return 0;}
-				double temp=1/d[i][j];
-				sum1+=temp;
-			}
-			if(i!=j && l[i][j]!=-1)
-			{
-				if(l[i][j]==0){cout<<"l "<<i<<" "<<j<<" = 0"<<endl;return 0;}
-				double t=1/l[i][j];
-				sum2+=t;			
-			}
-		}
-	}
-	sum1=sum1/(N*(N-1));
-	sum2=sum2/(N*(N-1));
-	cout<<"E(global) = "<<sum1<<endl;
-	cout<<"E(idle) = "<<sum2<<endl;
-	cout<<"E(norm_global) = "<<sum1/sum2<<endl;
-	eloc();
-	clock_t difftime=(double)(clock()-st)/CLOCKS_PER_SEC*1000;
-	cout<<"time taken:- "<<difftime<<endl;
+	string l_ij = L_IJ;
+	
+	string a_ij = OLD_EFFICIENCY + A_IJ;
+	string d_ij = OLD_EFFICIENCY + D_IJ;
+
+	Efficiency original = calculateEfficiency(a_ij, l_ij, d_ij);
+
+	a_ij = NEW_EFFICIENCY + A_IJ;
+	d_ij = NEW_EFFICIENCY + D_IJ;
+
+	Efficiency improved = calculateEfficiency(a_ij, l_ij, d_ij);
+
+	printCompareEfficiency(original, improved);
+
+	clock_t timeElapsed = (double)(clock() - start) / CLOCKS_PER_SEC * 1000;
+	cout << "\nTime Elapsed: " << timeElapsed << " ms\n" << endl;
+	
 	return 0;
 }
-/*
-1. aij -> adjacency matrix with weigted edges
-2. dij -> distance matrix calculated using path length
-3. lij -> geodistance matrix i.e. calculated using latitutes and longitudes
-*/
