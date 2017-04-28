@@ -13,10 +13,27 @@ CPP11 	:= -std=c++11
 
 ##-------------------------------------------------
 
-runEfficiency:
+
+## Efficiency calculation ##
+runEfficiency: efficiency
 	cd $(EFFICIENCY_DIR) &&\
-	./efficiency
+	./efficiencySmallWorld.exe
 
-efficiency: $(EFFICIENCY_DIR)/efficiencySmallWorld.cpp
-	$(COM) $< -o $(EFFICIENCY_DIR)/efficiency $(CFLAG) $(CPP11)
+efficiency: $(EFFICIENCY_DIR)/efficiencySmallWorld.exe
 
+
+## Centrality calculation ##
+runCentrality: centrality
+	cd $(CENTRALITY_DIR) &&\
+	./rankBetweennessCentrality.exe &&\
+	./rankClosenessCentrality.exe &&\
+	./rankEigenvectorCentrality.exe
+
+centrality: $(CENTRALITY_DIR)/rankClosenessCentrality.exe $(CENTRALITY_DIR)/rankEigenvectorCentrality.exe $(CENTRALITY_DIR)/rankBetweennessCentrality.exe
+
+
+
+
+
+%.exe: %.cpp
+	$(COM) $< -o $@ $(CFLAG) $(CPP11)

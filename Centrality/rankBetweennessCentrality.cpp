@@ -45,9 +45,9 @@ void addPath(int parent[], int j)
  
 // A utility function to print the constructed distance
 // array
-int addSolution(double dist[], int n, int parent[], int src)
+void addSolution(int parent[])
 {
-     for (int i = 1; i < V; i++)
+    for (int i = 1; i < V; i++)
     {
         addPath(parent, i);
     }
@@ -107,7 +107,7 @@ void dijkstra(double graph[V][V], int src)
     }
     parent[src] = -1;
     // print the constructed distance array
-    addSolution(dist, V, parent, src);
+    addSolution(parent);
 }
  
 // driver program to test above function
@@ -143,16 +143,22 @@ int main()
         dijkstra(graph, i);   
     }
     sort(countBet, countBet+V, std::greater< pair<int, int> >());
-    ofstream obj("betweennessRank.txt");
+
+    string outputFile = "rankData/betweennessRank.txt";
+    ofstream obj(outputFile);
+
     obj<<V-3<<endl;
     for(int i = 0; i < V; i++)
     {
         if(countBet[i].second!=134 && countBet[i].second!=135 && countBet[i].second!=0)
             obj<<countBet[i].second<<endl;
         
-        printf("%d --> %d \n", countBet[i].second, countBet[i].first);
+        //printf("%d --> %d \n", countBet[i].second, countBet[i].first);
     }
 
- 
+    obj.close();
+	
+	cout << "Betweenness centrality list written to \"" << outputFile << "\"" << endl;
+
     return 0;
 }

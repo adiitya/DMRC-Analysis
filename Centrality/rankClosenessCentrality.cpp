@@ -25,12 +25,19 @@ int main()
 		close.push_back(make_pair(1/sum, i));
 	}
 	sort(close.begin(), close.end(), greater<pair<double, int> >() );
-	ofstream obj("closenessRank.txt");
+
+	string outputFile = "rankData/closenessRank.txt";
+	ofstream obj(outputFile);
+	
 	obj<<N<<endl;
-	for(int i=2;i<close.size();i++)
+	for(int i=2;i<(int)close.size();i++)
 	{
 		obj<<close[i].second<<endl;
 		//cout<<close[i].second<<"-->"<<close[i].first<<endl;
 	}
+	
+	obj.close();
+	
+	cout << "Closeness centrality list written to \"" << outputFile << "\"" << endl;
 	return 0;
 } 
