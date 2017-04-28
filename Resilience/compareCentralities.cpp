@@ -135,7 +135,17 @@ int main()
 			if(down.find(t)!=down.end())
 				upOrder.push_back(t);
 		}
-		areas.push_back(area(scf(down, upOrder)));
+
+		vector<pair<double, double> > coordinates = scf(down, upOrder);
+		ofstream coordinatesFile("coordinates" + centrality[i] + ".txt");
+		// first: fsa
+		// second: scf 
+		int n = coordinates.size();
+		for(int j = 0; j < n; ++j)
+			coordinatesFile<<coordinates[j].first<<" "<<coordinates[j].second<<endl;
+
+
+		areas.push_back(area(coordinates));
 	}
 	double min=INT_MAX;
 	int res=-1;

@@ -52,8 +52,8 @@ noveltyGraph: novelty
 	cd $(NOVELTY_DIR) &&\
 	python graphPlot.py
 
-centralityGraph: centrality
-	cd $(CENTRALITY_DIR) &&\
+resilienceGraph: resilience
+	cd $(RESILIENCE_DIR) &&\
 	python graphPlot.py
 
 
