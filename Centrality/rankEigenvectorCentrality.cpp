@@ -8,7 +8,7 @@ int adj[N+2][N+2];
 int main()
 {
 	vector<pair<double, int> > v;
-	ifstream obj1("../Efficiency-Calc/AdjacencyMatrix(aij).txt");
+	ifstream obj1("../Efficiency/adjacencyMatrix(aij).txt");
 	double b[N+2];
 	for(int i=0;i<N+2;i++)
 	{
@@ -59,7 +59,10 @@ int main()
 		v.push_back(make_pair(b[i],i+1));
 	}
 	sort(v.begin(), v.end(), greater<pair<double, int> >());
-	ofstream obj("eigenvector.txt");
+
+	string outputFile = "rankData/eigenvectorRank.txt";
+	ofstream obj(outputFile);
+
 	obj<<N<<endl;
 	for(int i=0;i<N+2;i++)
 	{
@@ -67,5 +70,10 @@ int main()
 			obj<<v[i].second<<endl;
 		//cout<<v[i].second<<"-->"<<v[i].first<<endl;
 	}
+
+	obj.close();
+
+	cout << "Eigenvector centrality list written to \"" << outputFile << "\"" << endl;
+
 	return 0;
 } 

@@ -76,7 +76,7 @@ vector< pair<double, double> > scf(const set<int> &down, const vector<int> &upOr
 		active[(*i)]=0;
 	}
 
-	for(int i=0;i<upOrder.size();i++)
+	for(int i=0;i<(int)upOrder.size();i++)
 	{
 		int id=upOrder[i];
 
@@ -114,15 +114,18 @@ int main()
 		downFile>>temp;
 		down.insert(temp);
 	}
-	vector<string> centrality;
-	centrality.push_back("../Centrality/betweennessRank.txt");
-	centrality.push_back("../Centrality/closenessRank.txt");
-	centrality.push_back("../Centrality/eigenvector.txt");
+	vector<string> centralityPath;
+	string centrality[3] = {"betweennessRank", "closenessRank", "eigenvectorRank"};
+
+	const string rankData = "../Centrality/rankData/";
+	for(int i = 0; i < 3; ++i)
+		centralityPath.push_back(rankData + centrality[i] + ".txt");
+
 	vector<double> areas;
-	for(int i=0;i<centrality.size();i++)
+	for(int i=0;i<(int)centralityPath.size();i++)
 	{
 		vector<int> upOrder;
-		ifstream upFile(centrality[i]);
+		ifstream upFile(centralityPath[i]);
 		int s;//no.of stations
 		upFile>>s;
 		for (int j=0; j<s; j++)
@@ -136,16 +139,19 @@ int main()
 	}
 	double min=INT_MAX;
 	int res=-1;
-	for (int i = 0; i < areas.size(); ++i)
+	cout << "\n*****  Comparing different centralities [Area] *****\n" << endl;
+	for (int i = 0; i < (int)areas.size(); ++i)
 	{
-		cout<<centrality[i]<<"  "<<areas[i]<<endl;
+		cout<<setw(20)<<left<<centrality[i]<<"  "<<areas[i]<<endl;
 		if(min>areas[i])
 		{
 			min=areas[i];
 			res=i;
 		}
 	}
-	cout<<"Use this:"<<centrality[res]<<endl;
+	cout<<"\nUse "<<centrality[res]<<" centrality"<<endl;
+	cout<<endl;
+
 	return 0;
 }
 
