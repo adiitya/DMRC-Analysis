@@ -48,7 +48,17 @@ runNovelty: novelty
 novelty: $(NOVELTY_DIR)/newConnections.exe
 
 
+noveltyGraph: novelty
+	cd $(NOVELTY_DIR) &&\
+	python graphPlot.py
+
+centralityGraph: centrality
+	cd $(CENTRALITY_DIR) &&\
+	python graphPlot.py
+
+
 ## --------------------------------------------------
+
 
 clean: 
 	rm $(CENTRALITY_DIR)/*.exe

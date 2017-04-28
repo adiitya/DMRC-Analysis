@@ -128,8 +128,7 @@ int main()
 
 
 
-	/*for(int i = 0; i < newedge.size(); ++i)
-		cout<<newedge[i].first<<" "<<newedge[i].second<<endl;*/
-
-
+	ofstream newEdges("newEdges.txt");
+	for(int i = 0; i < (int)newedge.size(); ++i)
+		newEdges<<newedge[i].first<<" "<<newedge[i].second<<endl;
 }

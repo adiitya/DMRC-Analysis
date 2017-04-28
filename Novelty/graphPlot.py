@@ -37,7 +37,7 @@ def plotgraph(flag):
 	plt.show()
 
 
-file=open("lat_long.txt", "r")
+file=open("../StationData/lat_long.txt", "r")
 for line in file:
 	arr=line.split()
 	x[int(arr[0])]=float(arr[1]);
