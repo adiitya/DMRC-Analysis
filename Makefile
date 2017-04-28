@@ -32,7 +32,15 @@ runCentrality: centrality
 centrality: $(CENTRALITY_DIR)/rankClosenessCentrality.exe $(CENTRALITY_DIR)/rankEigenvectorCentrality.exe $(CENTRALITY_DIR)/rankBetweennessCentrality.exe
 
 
+## Compare centralities
+runResilience: resilience
+	cd $(RESILIENCE_DIR) &&\
+	./compareCentralities.exe
 
+resilience: $(RESILIENCE_DIR)/compareCentralities.exe
+
+
+## --------------------------------------------------
 
 
 %.exe: %.cpp
