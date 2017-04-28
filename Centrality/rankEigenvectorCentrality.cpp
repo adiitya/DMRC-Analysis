@@ -8,7 +8,7 @@ int adj[N+2][N+2];
 int main()
 {
 	vector<pair<double, int> > v;
-	ifstream obj1("../Efficiency-Calc/AdjacencyMatrix(aij).txt");
+	ifstream obj1("../Efficiency/adjacencyMatrix(aij).txt");
 	double b[N+2];
 	for(int i=0;i<N+2;i++)
 	{

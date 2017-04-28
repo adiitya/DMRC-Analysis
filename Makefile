@@ -1,9 +1,9 @@
 ## Directories
 CENTRALITY_DIR 	:= Centrality
-EFFICIENCY_DIR 	:= Efficiency-Calc
+EFFICIENCY_DIR 	:= Efficiency
 NOVELTY_DIR 	:= Novelty
 RESILIENCE_DIR 	:= Resilience
-STATTION_DIR 	:= StattionData
+STATION_DIR 	:= StationData
 
 ## Compiler
 COM 	:= g++
@@ -49,6 +49,12 @@ novelty: $(NOVELTY_DIR)/newConnections.exe
 
 
 ## --------------------------------------------------
+
+clean: 
+	rm $(CENTRALITY_DIR)/*.exe
+	rm $(EFFICIENCY_DIR)/*.exe
+	rm $(NOVELTY_DIR)/*.exe
+	rm $(RESILIENCE_DIR)/*.exe
 
 
 %.exe: %.cpp

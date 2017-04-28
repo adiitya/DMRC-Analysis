@@ -37,7 +37,7 @@ void floyd(double sd[MAX][MAX], int n)
 int main()
 {
 	ifstream edge("../StationData/final_output.txt");
-	ifstream lij("../Efficiency-Calc/sphericalShortestPathMatrix(lij).txt");
+	ifstream lij("../Efficiency/sphericalShortestPathMatrix(lij).txt");
 
 	string temp;
 	getline(edge, temp);

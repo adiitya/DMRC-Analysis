@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	ifstream obj1("../Efficiency-Calc/allPairShortestPathMatrix(dij).txt");
+	ifstream obj1("../Efficiency/allPairShortestPathMatrix(dij).txt");
 	vector<pair<double, int> > close;
 	for(int i=1;i<=N+2;i++)
 	{
