@@ -112,7 +112,7 @@ int main()
 
 	floyd(dist, N);
 	ofstream dij("allPairShortestPathMatrix(dij).txt");
-	ofstream obj("AdjacencyMatrix(aij).txt");
+	ofstream obj("adjacencyMatrix(aij).txt");
 	dij.precision(3);
 	for(int i=1;i<=N;i++)
 	{

@@ -40,6 +40,14 @@ runResilience: resilience
 resilience: $(RESILIENCE_DIR)/compareCentralities.exe
 
 
+## Create new connection in the network
+runNovelty: novelty
+	cd $(NOVELTY_DIR) &&\
+	./newConnections.exe
+
+novelty: $(NOVELTY_DIR)/newConnections.exe
+
+
 ## --------------------------------------------------
 
 
