@@ -31,6 +31,12 @@ runCentrality: centrality
 
 centrality: $(CENTRALITY_DIR)/rankClosenessCentrality.exe $(CENTRALITY_DIR)/rankEigenvectorCentrality.exe $(CENTRALITY_DIR)/rankBetweennessCentrality.exe
 
+runTableData: tableData
+	cd $(CENTRALITY_DIR) &&\
+	./prepareTableData.exe
+
+tableData: $(CENTRALITY_DIR)/prepareTableData.exe
+
 
 ## Compare centralities
 runResilience: resilience
