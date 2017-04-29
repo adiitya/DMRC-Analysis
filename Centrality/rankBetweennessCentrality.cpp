@@ -144,6 +144,17 @@ int main()
     }
     sort(countBet, countBet+V, std::greater< pair<int, int> >());
 
+    string outputFile1 = "rankData/betweennessRankActualValue.txt";
+    ofstream obj1(outputFile1);
+    for(int i = 0; i < V; ++i)
+    {
+        if(countBet[i].second != 134 && countBet[i].second != 135 && countBet[i].second != 0)
+    	obj1 << countBet[i].second << "," << countBet[i].first << endl;
+	}
+
+	cout << "Betweenness centrality actual value written to \"" << outputFile1 << "\"" << endl;
+
+
     string outputFile = "rankData/betweennessRank.txt";
     ofstream obj(outputFile);
 

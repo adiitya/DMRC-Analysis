@@ -26,6 +26,14 @@ int main()
 	}
 	sort(close.begin(), close.end(), greater<pair<double, int> >() );
 
+	string outputFile1 = "rankData/closenessRankActualValue.txt";
+	ofstream obj2(outputFile1);
+	for(int i = 2; i < (int)close.size(); ++i)
+	{
+		obj2<<close[i].second<<"," << close[i].first << endl;
+	}
+	cout << "Closeness centrality actual value written to \"" << outputFile1 << "\"" << endl;
+
 	string outputFile = "rankData/closenessRank.txt";
 	ofstream obj(outputFile);
 	
