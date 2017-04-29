@@ -149,7 +149,7 @@ int main()
     for(int i = 0; i < V; ++i)
     {
         if(countBet[i].second != 134 && countBet[i].second != 135 && countBet[i].second != 0)
-    	obj1 << countBet[i].second << "," << countBet[i].first << endl;
+    	obj1 << countBet[i].second << "," << ((double)countBet[i].first / 22650) << endl;
 	}
 
 	cout << "Betweenness centrality actual value written to \"" << outputFile1 << "\"" << endl;
