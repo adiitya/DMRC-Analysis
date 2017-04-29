@@ -9,7 +9,7 @@ def plotgraph(flag):
 	i=1
 	length=len(lines)
 
-	plt.figure(figsize = (13, 8))
+	plt.figure(figsize = (8, 8))
 	if flag == 0:
 		plt.title("Delhi Metro Map")
 	else:
@@ -22,15 +22,13 @@ def plotgraph(flag):
 		xc=[x[int(arr[0])], x[int(arr[1])]]
 		yc=[y[int(arr[0])], y[int(arr[1])]]
 
-		plt.plot(xc, yc, color = "red")
+		plt.plot(yc, xc, color = "red")
 
 	if flag==0:
-		plt.ylim(77, 77.4)
-		plt.xlim(28.3, 28.8)	
 		plt.show()
 
 	if flag == 0:
-		plt.figure(figsize = (13, 8))
+		plt.figure(figsize = (8, 8))
 		plt.title("New connection to be added")
 	
 	file=open("newEdges.txt", "r")
@@ -38,10 +36,8 @@ def plotgraph(flag):
 		arr=line.split();
 		xc=[x[int(arr[0])], x[int(arr[1])]]
 		yc=[y[int(arr[0])], y[int(arr[1])]]
-		plt.plot(xc, yc, color = "green")
+		plt.plot(yc, xc, color = "green")
 
-	plt.ylim(77, 77.4)
-	plt.xlim(28.3, 28.8)	
 	plt.show()
 
 
