@@ -8,29 +8,37 @@ def plotgraph(flag):
 	file.close()
 	i=1
 	length=len(lines)
-	#import re
+
+	plt.figure(figsize = (13, 8))
+	if flag == 0:
+		plt.title("Delhi Metro Map")
+	else:
+		plt.title("Delhi Metro combined with new connections")
+
 	while i<length:
-		#arr=re.split(' |\t', lines[i])
 		arr=lines[i].split()
 		i=i+1
-		#print(arr)
+
 		xc=[x[int(arr[0])], x[int(arr[1])]]
 		yc=[y[int(arr[0])], y[int(arr[1])]]
-		#print(xc)
-		#print(yc)
-		plt.plot(xc, yc)
+
+		plt.plot(xc, yc, color = "red")
 
 	if flag==0:
 		plt.ylim(77, 77.4)
 		plt.xlim(28.3, 28.8)	
 		plt.show()
 
+	if flag == 0:
+		plt.figure(figsize = (13, 8))
+		plt.title("New connection to be added")
+	
 	file=open("newEdges.txt", "r")
 	for line in file:
 		arr=line.split();
 		xc=[x[int(arr[0])], x[int(arr[1])]]
 		yc=[y[int(arr[0])], y[int(arr[1])]]
-		plt.plot(xc, yc)
+		plt.plot(xc, yc, color = "green")
 
 	plt.ylim(77, 77.4)
 	plt.xlim(28.3, 28.8)	
@@ -46,35 +54,3 @@ file.close()
 
 plotgraph(0)
 plotgraph(1)
-# file=open("../StationData/final_output.txt", "r")
-# lines=file.readlines()
-# file.close()
-# i=1
-# length=len(lines)
-# #import re
-# while i<length:
-# 	#arr=re.split(' |\t', lines[i])
-# 	arr=lines[i].split()
-# 	i=i+1
-# 	#print(arr)
-# 	xc=[x[int(arr[0])], x[int(arr[1])]]
-# 	yc=[y[int(arr[0])], y[int(arr[1])]]
-# 	#print(xc)
-# 	#print(yc)
-# 	plt.plot(xc, yc)
-
-# plt.ylim(77, 77.4)
-# plt.xlim(28.3, 28.8)	
-# plt.show()
-
-# file=open("newEdges.txt", "r")
-# for line in file:
-# 	arr=line.split();
-# 	xc=[x[int(arr[0])], x[int(arr[1])]]
-# 	yc=[y[int(arr[0])], y[int(arr[1])]]
-# 	plt.plot(xc, yc)
-
-# plt.ylim(77, 77.4)
-# plt.xlim(28.3, 28.8)	
-# plt.show()
-
