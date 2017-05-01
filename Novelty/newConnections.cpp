@@ -5,7 +5,7 @@ using namespace std;
 
 
 const int MAX = 154;
-const int NUM_OF_EDGE = 250;
+const int NUM_OF_EDGE = 150;
 const int THRESHOLD_DIST = 10;
 const int THRESHOLD_DIFF = 8;
 

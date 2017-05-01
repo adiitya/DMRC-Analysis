@@ -12,8 +12,6 @@ def plotgraph(flag):
 	plt.figure(figsize = (8, 8))
 	if flag == 0:
 		plt.title("Delhi Metro Map")
-	else:
-		plt.title("Delhi Metro combined with new connections")
 
 	while i<length:
 		arr=lines[i].split()
@@ -27,12 +25,19 @@ def plotgraph(flag):
 	if flag==0:
 		plt.show()
 
-	if flag == 0:
-		plt.figure(figsize = (8, 8))
-		plt.title("New connection to be added")
 	
 	file=open("newEdges.txt", "r")
-	for line in file:
+	lines = file.readlines()
+	length = len(lines)
+
+	if flag == 0:
+		plt.figure(figsize = (8, 8))
+		plt.title("New connection to be added [" + str(length) + " new edges]")
+	else:
+		plt.title("Delhi Metro combined with new connections [" + str(length) + " new Edges]")
+
+
+	for line in lines:
 		arr=line.split();
 		xc=[x[int(arr[0])], x[int(arr[1])]]
 		yc=[y[int(arr[0])], y[int(arr[1])]]

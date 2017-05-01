@@ -72,6 +72,9 @@ clean:
 	rm $(NOVELTY_DIR)/*.exe
 	rm $(RESILIENCE_DIR)/*.exe
 
+clearNovelty:
+	rm $(NOVELTY_DIR)/*.txt
+
 
 %.exe: %.cpp
 	$(COM) $< -o $@ $(CFLAG) $(CPP11)

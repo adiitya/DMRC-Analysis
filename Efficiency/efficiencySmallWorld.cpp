@@ -63,7 +63,7 @@ double calculateNormalizedLocalEfficiency()
 			}
 		}
 		int n = nodes.size();
-		if(n == 0 || n == 1) continue;
+		if(n == 0 /*|| n == 1*/) continue;
 		//create adjacency matrices
 		double sa[n][n];
 		double **sd = new double*[n];
@@ -120,16 +120,17 @@ double calculateNormalizedLocalEfficiency()
 				}
 			}
 		}
-		/*if(n==1)
+		if(n==1)
 		{
-			sum1+=0;
-			sum2+=0;
+			sum1+=0.1;
+			sum2+=1;
 		}
 		else
 		{
 			sum1=sum1/(n*(n-1));
 			sum2=sum2/(n*(n-1));
-		}*/
+		}
+		//cout<<"h1 "<<sum1<<" "<<sum2<<endl;
 		//if(sum1/sum2 !=0)cout<<"see"<<(sum1/sum2)<<endl;
 		sum+=(sum1/sum2);
 	}
@@ -157,6 +158,13 @@ Efficiency calculateEfficiency(string a_ij, string l_ij, string d_ij)
 	ifstream obj1(a_ij);
 	ifstream obj2(l_ij);
 	ifstream obj3(d_ij);
+
+	Efficiency efficiency;
+	if(!obj1.is_open())
+	{
+		efficiency.global = -1;
+		return efficiency;
+	}
 
 	for(int i = 0; i < N + 2; i++)
 	{
@@ -207,7 +215,6 @@ Efficiency calculateEfficiency(string a_ij, string l_ij, string d_ij)
 	sum1 = sum1 / (N * (N - 1));
 	sum2 = sum2 / (N * (N - 1));
 
-	Efficiency efficiency;
 	efficiency.global 	= sum1;
 	efficiency.idle 	= sum2;
 	efficiency.normalizedGlobal 	= sum1 / sum2;
@@ -218,6 +225,7 @@ Efficiency calculateEfficiency(string a_ij, string l_ij, string d_ij)
 
 inline double percentageImprovement(double original, double improved)
 {
+	if(improved == 0 && original == 0) return -1;
 	return 100.0 * (improved - original) / original;
 }
 
@@ -229,25 +237,42 @@ void printCompareEfficiency(Efficiency original, Efficiency improved)
 
 	cout << setw(20) << "Efficiency";
 	cout << setw(15) << "Original";
-	cout << setw(15) << "Improved";
-	cout << setw(15) << "% Increased" << endl;
+	if(improved.global != -1)
+	{
+		cout << setw(15) << "Improved";
+		cout << setw(15) << "% Increased" << endl;
+	}
+
 	cout << endl;
 
-	cout << setw(20) << "Global";
+	/*cout << setw(20) << "Global";
 	cout << setw(15) << original.global;
-	cout << setw(15) << improved.global;
-	cout << setw(15) << percentageImprovement(original.global, improved.global) << endl;
+	if(improved.global != -1)
+	{
+		cout << setw(15) << improved.global;
+		cout << setw(15) << percentageImprovement(original.global, improved.global);
+	}
 
+	cout<<endl;
+*/
 	cout << setw(20) << "Normalized Global";
 	cout << setw(15) << original.normalizedGlobal;
-	cout << setw(15) << improved.normalizedGlobal;
-	cout << setw(15) << percentageImprovement(original.normalizedGlobal, improved.normalizedGlobal) << endl;
+	if(improved.global != -1)
+	{
+		cout << setw(15) << improved.normalizedGlobal;
+		cout << setw(15) << percentageImprovement(original.normalizedGlobal, improved.normalizedGlobal);
+	}
+	cout<<endl;
 
 	cout << setw(20) << "Normalized Local";
 	cout << setw(15) << original.normalizedLocal;
-	cout << setw(15) << improved.normalizedLocal;
-	cout << setw(15) << percentageImprovement(original.normalizedLocal, improved.normalizedLocal) << endl;
-
+	if(improved.global != -1)
+	{
+		cout << setw(15) << improved.normalizedLocal;
+		cout << setw(15) << percentageImprovement(original.normalizedLocal, improved.normalizedLocal);
+	}
+	cout<<endl;
+	
 	cout << right;
 }
 
@@ -266,7 +291,6 @@ int main()
 	d_ij = NEW_EFFICIENCY + D_IJ;
 
 	Efficiency improved = calculateEfficiency(a_ij, l_ij, d_ij);
-
 	printCompareEfficiency(original, improved);
 
 	clock_t timeElapsed = (double)(clock() - start) / CLOCKS_PER_SEC * 1000;

@@ -19,7 +19,7 @@ def plotGraph(fileName, lineColor, lineLabel):
 	plot.plot(xcoord, ycoord, color = lineColor, linewidth = 2, label = lineLabel)
 
 
-plot.figure(figsize = (13, 7))
+plot.figure(figsize = (8, 8))
 
 plot.title("Comparing different centralities for resilience")
 plot.xlabel("Fraction of Station Active [FSA]")
@@ -29,5 +29,5 @@ plotGraph("coordinatesbetweennessRank.txt", 	"red", 		"Betweenness Centrality")
 plotGraph("coordinatesclosenessRank.txt", 		"blue", 	"Closeness Centrality")
 plotGraph("coordinateseigenvectorRank.txt", 	"green", 	"Eigenvector Centrality")
 
-plot.legend(loc = "lower right", frameon = True)
+plot.legend(loc = "lower right", frameon = False)
 plot.show()

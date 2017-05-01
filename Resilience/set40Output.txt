@@ -1,0 +1,11 @@
+cd Resilience &&\
+./compareCentralities.exe
+
+*****  Comparing different centralities [Area] *****
+
+betweennessRank       0.711131
+closenessRank         0.706329
+eigenvectorRank       0.756962
+
+Use closenessRank centrality
+
